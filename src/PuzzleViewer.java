@@ -9,13 +9,18 @@ public class PuzzleViewer extends JFrame{
             BUFFER_Y = (int)(WINDOW_HEIGHT*0.15),
             SIDE_LENGTH = (int)(WINDOW_WIDTH*0.19),
             LABEL_OFFSET = (int)(WINDOW_WIDTH*0.05);
+    public String puzzle;
     public final String TITLE = "Wordsearch";
+
 
     private Puzzle game;
 
     public PuzzleViewer(Puzzle game){
         // Allows variables / methods to be shared
         this.game = game;
+        puzzle = game.getPuzzle();
+
+
 
         // Initialize images
 
@@ -27,6 +32,8 @@ public class PuzzleViewer extends JFrame{
     }
 
     public void paint(Graphics g){
-
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Serif", Font.PLAIN, 30));
+        g.drawString(puzzle, 100, 100);
     }
 }
