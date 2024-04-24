@@ -8,7 +8,11 @@ public class PuzzleViewer extends JFrame{
             BUFFER_X = (int)(WINDOW_WIDTH*0.5 - 2.5 * Cell.SIZE),
             BUFFER_Y = (int)(WINDOW_HEIGHT*0.35),
             SIDE_LENGTH = (int)(WINDOW_WIDTH*0.19),
-            LABEL_OFFSET = (int)(WINDOW_WIDTH*0.15);
+            LABEL_OFFSET = (int)(WINDOW_WIDTH*0.15),
+            BUTTON_WIDTH = 200,
+            BUTTON_HEIGHT = 50,
+            BUTTON_X = (int)(WINDOW_WIDTH*0.04),
+            BUTTON_Y = (int)(WINDOW_HEIGHT*0.9);
     private String currentWord;
 
     public final String TITLE = "Wordsearch";
@@ -45,6 +49,14 @@ public class PuzzleViewer extends JFrame{
                 cell.draw(g);
             }
         }
+
+        // Prints the buttons
+        // Code comes from tutorials point
+        Graphics2D g2d = (Graphics2D) g;
+        g.setColor(new Color(200, 205, 232));
+        g2d.fillRoundRect(BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, 50, 30);
+
+
 
         // Prints the word being found by the user
         if(currentWord != null) {

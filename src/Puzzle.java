@@ -71,24 +71,27 @@ public class Puzzle implements MouseListener {
     // Mouse Controls : taken from Mr. Blick's MouseDemo code
     @Override
     public void mouseClicked(MouseEvent e) {
+    }
+    @Override
+    public void mousePressed(MouseEvent e) {
         // Ask the input event the current location (x and y position on the Frame) of the mouse
         int x = e.getX();
         int y = e.getY();
         // Check if each Cell has been clicked
+        System.out.println("click");
+
         for(Cell[] row: BOARD){
             for(Cell c: row){
                 if (c.isClicked(x, y)) {
+                    System.out.println("letter clicked");
                     // Move the ball and repaint.
                     window.addToWord(c.getLetter());
                     window.repaint();
-                    System.out.println(c.getLetter());
+                    return;
                 }
             }
         }
-
     }
-    @Override
-    public void mousePressed(MouseEvent e) {}
     @Override
     public void mouseReleased(MouseEvent e) {}
     @Override

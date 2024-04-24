@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c96fc70-a8d6-4092-92f0-01be03ad6d12" name="Changes" comment="Began coding">
+    <list default="true" id="1c96fc70-a8d6-4092-92f0-01be03ad6d12" name="Changes" comment="Printed out board / set up mouse input to type letters">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Puzzle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PuzzleViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PuzzleViewer.java" afterDir="false" />
     </list>
@@ -77,33 +76,37 @@
       <option name="project" value="LOCAL" />
       <updated>1713823385051</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Printed out board / set up mouse input to type letters">
+      <option name="closed" value="true" />
+      <created>1713930415725</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713930415726</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First" />
     <MESSAGE value="Added some classes / method headers -- outline" />
     <MESSAGE value="Began coding" />
-    <option name="LAST_COMMIT_MESSAGE" value="Began coding" />
+    <MESSAGE value="Printed out board / set up mouse input to type letters" />
+    <option name="LAST_COMMIT_MESSAGE" value="Printed out board / set up mouse input to type letters" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/PuzzleViewer.java</url>
-          <line>14</line>
+          <line>18</line>
           <properties field="puzzle" class="PuzzleViewer" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/PuzzleViewer.java</url>
-          <line>52</line>
+          <line>64</line>
           <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Puzzle.java</url>
-          <line>82</line>
-          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
