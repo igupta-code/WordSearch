@@ -5,6 +5,8 @@ public class Cell {
     private char letter;
     private int row;
     private int col;
+    public static final int SIZE = 100;
+
 
     public Cell(char letter, int row, int col){
         this.letter = letter;
@@ -37,12 +39,22 @@ public class Cell {
         this.col = col;
     }
 
-    public void draw(Graphics g, int xTop, int yTop){
+    public boolean isClicked(int x, int y) {
+        int topX = PuzzleViewer.BUFFER_X + row*SIZE;
+        int bottomY = PuzzleViewer.BUFFER_Y + col*SIZE;
+        // The clicked x / y values need to be greater than the top of the box
+        // But not greater than the bottom / right side of the box
+
+        return (x > topX && x < topX+SIZE) && (y < bottomY && y > bottomY-SIZE);
+    }
+
+    public void draw(Graphics g){
         g.setColor(Color.BLACK);
-        g.setFont(new Font("Serif", Font.PLAIN, 30));
+        g.setFont(new Font("Serif", Font.PLAIN, (int)(SIZE * 0.8)));
         // FIX THIS --- the 100s need to change
-        g.drawString(""+letter, 100, 100);
+        int x = PuzzleViewer.BUFFER_X + row*SIZE;
+        int y = PuzzleViewer.BUFFER_Y + col*SIZE;
+        g.drawString(""+letter, x , y);
     }
 }
 
-}

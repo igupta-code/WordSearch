@@ -1,9 +1,13 @@
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Puzzle {
+public class Puzzle implements MouseListener {
 
     private ArrayList<String> foundWords;
     public static final int DICTIONARY_SIZE = 143091;
@@ -24,11 +28,14 @@ public class Puzzle {
             }
         }
         window = new PuzzleViewer(this);
+
+        this.window.addMouseListener(this);
     }
     // Load Dictionary taken from SpellingBee source code
     public String getPuzzle(){
         return puzzle;
     }
+
     public static void loadDictionary() {
         Scanner s;
         File dictionaryFile = new File("Resources/dictionary.txt");
@@ -61,9 +68,44 @@ public class Puzzle {
     }
 
 
+    // Mouse Controls : taken from Mr. Blick's MouseDemo code
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // Ask the input event the current location (x and y position on the Frame) of the mouse
+        int x = e.getX();
+        int y = e.getY();
+        // Check if each Cell has been clicked
+        for(Cell[] row: BOARD){
+            for(Cell c: row){
+                if (c.isClicked(x, y)) {
+                    // Move the ball and repaint.
+                    window.addToWord(c.getLetter());
+                    window.repaint();
+                    System.out.println(c.getLetter());
+                }
+            }
+        }
+
+    }
+    @Override
+    public void mousePressed(MouseEvent e) {}
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+    @Override
+    public void mouseExited(MouseEvent e) {}
+
+
+
+
+
+
+
     public static void main(String[] args){
         Puzzle p = new Puzzle();
         Puzzle.loadDictionary();
     }
+
 
 }
