@@ -40,8 +40,8 @@ public class Cell {
     }
 
     public boolean isClicked(int x, int y) {
-        int topX = PuzzleViewer.BUFFER_X + row*SIZE;
-        int bottomY = PuzzleViewer.BUFFER_Y + col*SIZE;
+        int topX = PuzzleViewer.BUFFER_X + col*SIZE;
+        int bottomY = PuzzleViewer.BUFFER_Y + row*SIZE;
         // The clicked x / y values need to be greater than the top of the box
         // But not greater than the bottom / right side of the box
 
@@ -52,8 +52,8 @@ public class Cell {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Serif", Font.PLAIN, (int)(SIZE * 0.8)));
         // FIX THIS --- the 100s need to change
-        int x = PuzzleViewer.BUFFER_X + row*SIZE;
-        int y = PuzzleViewer.BUFFER_Y + col*SIZE;
+        int x = PuzzleViewer.BUFFER_X + col*SIZE;
+        int y = PuzzleViewer.BUFFER_Y + row*SIZE;
         g.drawString(""+letter, x , y);
     }
 }

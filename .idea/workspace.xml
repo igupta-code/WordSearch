@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1c96fc70-a8d6-4092-92f0-01be03ad6d12" name="Changes" comment="Printed out board / set up mouse input to type letters">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Puzzle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PuzzleViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PuzzleViewer.java" afterDir="false" />
     </list>
@@ -84,7 +85,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713930415726</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Printed out board / set up mouse input to type letters">
+      <option name="closed" value="true" />
+      <created>1713991541488</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713991541488</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -99,14 +108,14 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/PuzzleViewer.java</url>
-          <line>18</line>
+          <line>17</line>
           <properties field="puzzle" class="PuzzleViewer" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/PuzzleViewer.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/src/Cell.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

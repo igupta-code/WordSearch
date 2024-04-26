@@ -14,13 +14,18 @@ public class Puzzle implements MouseListener {
     public static final String[] DICTIONARY = new String[DICTIONARY_SIZE];
     public static final int ROW = 5,
             COL = 5;
-    public static final Cell[][] BOARD = new Cell[ROW][COL];;
+    public static final Cell[][] BOARD = new Cell[ROW][COL];
     private String puzzle = "";
+    private String currentWord;
+    private int state = 0;
+
 
 
     private PuzzleViewer window;
 
     public Puzzle(){
+        currentWord = "";
+        foundWords = new ArrayList<String>();
         loadPuzzle();
         for(int i = 0; i < ROW; i++){
             for(int j = 0; j < COL; j++){
@@ -31,11 +36,23 @@ public class Puzzle implements MouseListener {
 
         this.window.addMouseListener(this);
     }
-    // Load Dictionary taken from SpellingBee source code
+
+    // Getters and setters
     public String getPuzzle(){
         return puzzle;
     }
+    public int getState(){
+        return state;
+    }
+    public void setState(int s){
+        state = s;
+    }
+    public String getCurrentWord(){
+        return currentWord;
+    }
 
+
+    // Load Dictionary taken from SpellingBee source code
     public static void loadDictionary() {
         Scanner s;
         File dictionaryFile = new File("Resources/dictionary.txt");
@@ -77,20 +94,39 @@ public class Puzzle implements MouseListener {
         // Ask the input event the current location (x and y position on the Frame) of the mouse
         int x = e.getX();
         int y = e.getY();
-        // Check if each Cell has been clicked
-        System.out.println("click");
 
+        // Check if each Cell has been clicked
         for(Cell[] row: BOARD){
             for(Cell c: row){
                 if (c.isClicked(x, y)) {
                     System.out.println("letter clicked");
                     // Move the ball and repaint.
-                    window.addToWord(c.getLetter());
+                    currentWord += c.getLetter();
                     window.repaint();
                     return;
                 }
             }
         }
+
+
+        // If the enter Button is clicked, enter the current word into the foundWords arrayList
+        boolean xPos = PuzzleViewer.BUTTON_X < x && PuzzleViewer.BUTTON_X + PuzzleViewer.BUTTON_WIDTH > x;
+        boolean yPos = PuzzleViewer.BUTTON_Y < y && PuzzleViewer.BUTTON_Y + PuzzleViewer.BUTTON_HEIGHT > y;
+        if(xPos && yPos){
+            foundWords.add(currentWord);
+            System.out.println(foundWords);
+        }
+        // If the I'm done button is clicked, change the state
+        // WINDOW_WIDTH- BUTTON_X - BUTTON_WIDTH
+        boolean xPos2 = PuzzleViewer.WINDOW_WIDTH - PuzzleViewer.BUTTON_X - PuzzleViewer.BUTTON_WIDTH < x &&
+                PuzzleViewer.WINDOW_WIDTH - PuzzleViewer.BUTTON_X > x;
+        if(xPos2 && yPos){
+            state = 1;
+            System.out.println(state);
+        }
+
+
+
     }
     @Override
     public void mouseReleased(MouseEvent e) {}
@@ -98,10 +134,6 @@ public class Puzzle implements MouseListener {
     public void mouseEntered(MouseEvent e) {}
     @Override
     public void mouseExited(MouseEvent e) {}
-
-
-
-
 
 
 
