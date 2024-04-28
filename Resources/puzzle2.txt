@@ -1,0 +1,13 @@
+TMRUN
+DRESS
+NEVAL
+ADOFN
+MSLAM
+
+words:
+run
+lover
+me
+dress
+red
+man
