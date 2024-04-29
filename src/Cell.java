@@ -48,6 +48,15 @@ public class Cell {
         return (x > topX && x < topX+SIZE) && (y < bottomY && y > bottomY-SIZE);
     }
 
+//    public boolean isValidCell(Cell last){
+//        if(last == null){
+//            return true;
+//        }
+//        // get a directional component
+//        if(Puzzle.)
+//
+//    }
+
     public void draw(Graphics g){
         g.setColor(Color.BLACK);
         g.setFont(new Font("Serif", Font.PLAIN, (int)(SIZE * 0.8)));

@@ -75,8 +75,5 @@ public class PuzzleViewer extends JFrame{
                 g.drawString("You found " + game.getFoundWords().size() +" words",
                         WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
             }
-
-
-
     }
 }

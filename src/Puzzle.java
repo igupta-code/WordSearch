@@ -18,25 +18,35 @@ public class Puzzle implements MouseListener {
     private String puzzle = "";
     private String currentWord;
     private int state;
+    private Cell last;
+    // North = 0, East = 1, South = 2, West = 3
+    // Northeast = 4, Southeast = 5, Southwest = 6, Northwest = 7
+    private int direction = -1;
 
 
 
     private PuzzleViewer window;
 
     public Puzzle(){
+        last = null;
         currentWord = "";
         state = 1;
         foundWords = new ArrayList<String>();
         loadPuzzle();
         for(int i = 0; i < ROW; i++){
             for(int j = 0; j < COL; j++){
-                BOARD[i][j] = new Cell(puzzle.charAt(i*ROW + j), i, j);
+                Cell c = new Cell(puzzle.charAt(i*ROW + j), i, j);
+                BOARD[i][j] = c;
+                c.setRow(i);
+                c.setCol(j);
+
             }
         }
         window = new PuzzleViewer(this);
 
         this.window.addMouseListener(this);
     }
+
 
     // Getters and setters
     public String getPuzzle(){
@@ -123,6 +133,54 @@ public class Puzzle implements MouseListener {
             return isWord(word, low, mid-1);
         }
     }
+    public boolean isValidCell(Cell c){
+        if(last == null || currentWord.isEmpty()){
+            return true;
+        }
+
+        int row = last.getRow() - c.getRow();
+        int col = last.getCol() - c.getCol();
+        // If the row is not between -1 and 1 then you are skipping rows
+        if(row > 1 || row < -1 || col > 1 || col < -1 || (col == 0 && row == 0)) return false;
+
+        if(currentWord.length() == 1){
+            // North = 0, East = 1, South = 2, West = 3
+            // Northeast = 4, Southeast = 5, Southwest = 6, Northwest = 7
+            if(row == -1){
+                if(col == -1) direction = 5;
+                else if(col == 1) direction = 6;
+                else direction = 2;
+            }
+            else if(row == 1){
+                if(col == -1) direction = 4;
+                else if(col == 1) direction = 7;
+                else direction = 0;
+            }
+            else if(col == -1) direction = 1;
+            else direction = 3;
+
+            System.out.println(direction);
+        }
+        else{
+            // North = 0, East = 1, South = 2, West = 3
+            // Northeast = 4, Southeast = 5, Southwest = 6, Northwest = 7
+            if(direction == 0 || direction == 7 || direction == 4)
+                if (row != 1) return false;
+            if(direction == 6 || direction == 2 || direction == 5)
+                if(row != -1) return false;
+            if(direction == 0 || direction == 2)
+                if(col != 0) return false;
+            if(direction == 4 || direction == 1 || direction == 5)
+                if(col != -1) return false;
+            if(direction == 7 || direction == 3 || direction == 6)
+                if(col == 1) return false;
+            if(direction == 3 || direction == 1){
+                return row == 0;
+            }
+        }
+        return true;
+    }
+
 
 
     // Mouse Controls : taken from Mr. Blick's MouseDemo code
@@ -139,7 +197,8 @@ public class Puzzle implements MouseListener {
         // add the Cell's letter to the currentWord and repaint to show the word
         for(Cell[] row: BOARD){
             for(Cell c: row){
-                if (c.isClicked(x, y)) {
+                if (c.isClicked(x, y) && this.isValidCell(c)) {
+                    last = c;
                     currentWord += c.getLetter();
                     window.repaint();
                     return;
