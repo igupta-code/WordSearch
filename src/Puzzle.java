@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Puzzle implements MouseListener {
-
-    private ArrayList<String> foundWords;
     public static final int DICTIONARY_SIZE = 143091;
     public static final String[] DICTIONARY = new String[DICTIONARY_SIZE];
     public static final int ROW = 5,
             COL = 5;
     public static final Cell[][] BOARD = new Cell[ROW][COL];
+    private ArrayList<String> foundWords;
+    private ArrayList<String> allWords;
     private String puzzle = "";
     private String currentWord;
     private int state;
@@ -32,6 +32,7 @@ public class Puzzle implements MouseListener {
         currentWord = "";
         state = 1;
         foundWords = new ArrayList<String>();
+        allWords = new ArrayList<String>();
         loadPuzzle();
         for(int i = 0; i < ROW; i++){
             for(int j = 0; j < COL; j++){
@@ -42,6 +43,7 @@ public class Puzzle implements MouseListener {
 
             }
         }
+        findSoltuions();
         window = new PuzzleViewer(this);
 
         this.window.addMouseListener(this);
@@ -94,9 +96,54 @@ public class Puzzle implements MouseListener {
         }
         while(s.hasNextLine()) {
             puzzle += s.nextLine();
-            System.out.println(puzzle);
         }
     }
+
+    public void findSoltuions(){
+        // Go through every int in the array and use that letter as the starting point
+        // Look in every direction to
+        for(int i = 0; i < ROW; i++){
+            for(int j = 0; j < COL; j++){
+                this.seek(BOARD[i][j]);
+            }
+        }
+        last = null;
+    }
+    public void seek(Cell c){
+        currentWord += c.getLetter();
+        // Go in all 8 directions around current cell
+        int row = c.getRow();
+        int col = c.getCol();
+
+        // Looks down
+        while(row+1 < 5 && isValidCell(BOARD[row + 1][col])){
+            currentWord += BOARD[row + 1][col].getLetter();
+            if(currentWord.length() >= 3){
+                allWords.add(currentWord);
+                System.out.println(currentWord);
+            }
+            row++;
+        }
+        currentWord = "";
+
+        // Looks up
+        while(row-1 >= 0 && isValidCell(BOARD[row - 1][col])){
+            currentWord += BOARD[row - 1][col].getLetter();
+            if(currentWord.length() >= 3){
+                allWords.add(currentWord);
+                System.out.println(currentWord);
+            }
+            row--;
+        }
+        // Resets variables to look in next direction
+        currentWord = "";
+        row = c.getRow();
+
+
+        // Resets variables for next word
+
+    }
+
 
 
     public void checkWords(){
@@ -134,6 +181,9 @@ public class Puzzle implements MouseListener {
         }
     }
     public boolean isValidCell(Cell c){
+        if(c == null){
+            return false;
+        }
         if(last == null || currentWord.isEmpty()){
             return true;
         }
@@ -158,8 +208,6 @@ public class Puzzle implements MouseListener {
             }
             else if(col == -1) direction = 1;
             else direction = 3;
-
-            System.out.println(direction);
         }
         else{
             // North = 0, East = 1, South = 2, West = 3
@@ -173,7 +221,7 @@ public class Puzzle implements MouseListener {
             if(direction == 4 || direction == 1 || direction == 5)
                 if(col != -1) return false;
             if(direction == 7 || direction == 3 || direction == 6)
-                if(col == 1) return false;
+                if(col != 1) return false;
             if(direction == 3 || direction == 1){
                 return row == 0;
             }
@@ -215,14 +263,13 @@ public class Puzzle implements MouseListener {
             window.repaint();
             System.out.println(foundWords);
         }
-        // If the I'm done button is clicked, change the state
+        // If the "I'm done" button is clicked, change the state
         boolean xPos2 = PuzzleViewer.WINDOW_WIDTH - PuzzleViewer.BUTTON_X - PuzzleViewer.BUTTON_WIDTH < x &&
                 PuzzleViewer.WINDOW_WIDTH - PuzzleViewer.BUTTON_X > x;
         if(xPos2 && yPos){
             state = 2;
             // Check words is called so that the correct number of words is printed out on the front end
             checkWords();
-            System.out.println(state);
             window.repaint();
         }
     }
