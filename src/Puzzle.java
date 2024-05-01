@@ -125,6 +125,8 @@ public class Puzzle implements MouseListener {
             row++;
         }
         currentWord = "";
+        currentWord += c.getLetter();
+        row = c.getRow();
 
         // Looks up
         while(row-1 >= 0 && isValidCell(BOARD[row - 1][col])){
@@ -137,6 +139,80 @@ public class Puzzle implements MouseListener {
         }
         // Resets variables to look in next direction
         currentWord = "";
+        currentWord += c.getLetter();
+        row = c.getRow();
+
+
+        // Looks right
+        while(col+1 < 5 && isValidCell(BOARD[row][col+1])){
+            currentWord += BOARD[row][col+1].getLetter();
+            if(currentWord.length() >= 3){
+                allWords.add(currentWord);
+                System.out.println(currentWord);
+            }
+            col++;
+        }
+        currentWord = "";
+        currentWord += c.getLetter();
+        col = c.getCol();
+
+        // Looks left
+        while(col-1 > -1 && isValidCell(BOARD[row][col-1])){
+            currentWord += BOARD[row][col-1].getLetter();
+            if(currentWord.length() >= 3){
+                allWords.add(currentWord);
+                System.out.println(currentWord);
+            }
+            col--;
+        }
+        currentWord = "";
+        currentWord += c.getLetter();
+        col = c.getCol();
+
+
+        // Looks at diagonal : right and down
+        while(col+1 < 5 && row+1 < 5 && isValidCell(BOARD[row+1][col+1])){
+            currentWord += BOARD[row+1][col+1].getLetter();
+            if(currentWord.length() >= 3){
+                allWords.add(currentWord);
+                System.out.println(currentWord);
+            }
+            col++;
+            row++;
+        }
+        currentWord = "";
+        currentWord += c.getLetter();
+        col = c.getCol();
+        row = c.getRow();
+
+        // Looks at diagonal : left and up
+        while(col-1 > -1 && row-1 > -1 && isValidCell(BOARD[row-1][col-1])){
+            currentWord += BOARD[row-1][col-1].getLetter();
+            if(currentWord.length() >= 3){
+                allWords.add(currentWord);
+                System.out.println(currentWord);
+            }
+            col--;
+            row--;
+        }
+        currentWord = "";
+        currentWord += c.getLetter();
+        col = c.getCol();
+        row = c.getRow();
+
+        // Looks at diagonal : right and up
+        while(col+1 < 5 && row-1 > -1 && isValidCell(BOARD[row+1][col-1])){
+            currentWord += BOARD[row+1][col-1].getLetter();
+            if(currentWord.length() >= 3){
+                allWords.add(currentWord);
+                System.out.println(currentWord);
+            }
+            col++;
+            row--;
+        }
+        currentWord = "";
+        currentWord += c.getLetter();
+        col = c.getCol();
         row = c.getRow();
 
 
