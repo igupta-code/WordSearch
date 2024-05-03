@@ -51,7 +51,7 @@ public class PuzzleViewer extends JFrame{
                     g.drawString(game.getCurrentWord(), BUFFER_X, LABEL_OFFSET);
                 }
 
-                // Prints the enter and exitbuttons
+                // Prints the enter and exit buttons
                 // Code for rounded rectangle comes from tutorials point
                 Graphics2D g2d = (Graphics2D) g;
                 g.setColor(new Color(200, 205, 232));
@@ -72,8 +72,9 @@ public class PuzzleViewer extends JFrame{
                 g.fillRect(0,0, WINDOW_WIDTH, WINDOW_HEIGHT);
                 g.setFont(new Font("Felix Banjamin", Font.PLAIN, (int) (BUTTON_HEIGHT * 0.7)));
                 g.setColor(Color.BLACK);
-                g.drawString("You found " + game.getFoundWords().size() +" words",
-                        WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+                String print = "You found " + game.getFoundWords().size() + " words out of \n" +
+                        game.getAllWords().size() + " total words.";
+                g.drawString(print, WINDOW_WIDTH/2 - 350, WINDOW_HEIGHT/2);
             }
     }
 }

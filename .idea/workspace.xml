@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c96fc70-a8d6-4092-92f0-01be03ad6d12" name="Changes" comment="started seek method">
+    <list default="true" id="1c96fc70-a8d6-4092-92f0-01be03ad6d12" name="Changes" comment="Worked on seek method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Puzzle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PuzzleViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PuzzleViewer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +124,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714496277423</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Worked on seek method">
+      <option name="closed" value="true" />
+      <created>1714600930092</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1714600930092</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -134,7 +143,8 @@
     <MESSAGE value="added check words, new puzzle, and done screen/button" />
     <MESSAGE value="added an isValidCell method" />
     <MESSAGE value="started seek method" />
-    <option name="LAST_COMMIT_MESSAGE" value="started seek method" />
+    <MESSAGE value="Worked on seek method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Worked on seek method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -152,23 +162,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Puzzle.java</url>
-          <line>226</line>
+          <line>221</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Puzzle.java</url>
-          <line>324</line>
+          <line>325</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Puzzle.java</url>
-          <line>118</line>
+          <line>110</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Puzzle.java</url>
-          <line>104</line>
-          <option name="timeStamp" value="21" />
+          <line>191</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Puzzle.java</url>
+          <line>198</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

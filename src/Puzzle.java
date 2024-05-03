@@ -43,7 +43,7 @@ public class Puzzle implements MouseListener {
 
             }
         }
-        findSoltuions();
+        findSoltutions();
         window = new PuzzleViewer(this);
 
         this.window.addMouseListener(this);
@@ -51,21 +51,12 @@ public class Puzzle implements MouseListener {
 
 
     // Getters and setters
-    public String getPuzzle(){
-        return puzzle;
-    }
-    public int getState(){
-        return state;
-    }
-    public void setState(int s){
-        state = s;
-    }
-    public String getCurrentWord(){
-        return currentWord;
-    }
-    public ArrayList<String> getFoundWords(){
-        return foundWords;
-    }
+    public String getPuzzle(){return puzzle;}
+    public int getState(){return state;}
+    public void setState(int s){state = s;}
+    public String getCurrentWord(){return currentWord;}
+    public ArrayList<String> getFoundWords(){return foundWords;}
+    public ArrayList<String> getAllWords(){return allWords;}
 
 
     // Load Dictionary taken from SpellingBee source code
@@ -98,10 +89,10 @@ public class Puzzle implements MouseListener {
             puzzle += s.nextLine();
         }
     }
-
-    public void findSoltuions(){
-        // Go through every int in the array and use that letter as the starting point
-        // Look in every direction to
+    // Find Soltutions find all possible combinations of letters in the board
+    // Go through every Cell in the board and use that letter as the starting point for the word
+    public void findSoltutions(){
+        // Seek in every direction for each letter
         for(int i = 0; i < ROW; i++){
             for(int j = 0; j < COL; j++){
                 this.seek(BOARD[i][j]);
@@ -109,21 +100,22 @@ public class Puzzle implements MouseListener {
         }
         last = null;
     }
+    // Seek finds all words greater than length three surrounding the letter
     public void seek(Cell c){
         currentWord += c.getLetter();
-        // Go in all 8 directions around current cell
         int row = c.getRow();
         int col = c.getCol();
 
+        // Go in all 8 directions around current cell
         // Looks down
         while(row+1 < 5 && isValidCell(BOARD[row + 1][col])){
             currentWord += BOARD[row + 1][col].getLetter();
             if(currentWord.length() >= 3){
                 allWords.add(currentWord);
-                System.out.println(currentWord);
             }
             row++;
         }
+        // Reset variables to look in next direction
         currentWord = "";
         currentWord += c.getLetter();
         row = c.getRow();
@@ -131,9 +123,9 @@ public class Puzzle implements MouseListener {
         // Looks up
         while(row-1 >= 0 && isValidCell(BOARD[row - 1][col])){
             currentWord += BOARD[row - 1][col].getLetter();
+            // Word must be greater than length 3
             if(currentWord.length() >= 3){
                 allWords.add(currentWord);
-                System.out.println(currentWord);
             }
             row--;
         }
@@ -148,7 +140,6 @@ public class Puzzle implements MouseListener {
             currentWord += BOARD[row][col+1].getLetter();
             if(currentWord.length() >= 3){
                 allWords.add(currentWord);
-                System.out.println(currentWord);
             }
             col++;
         }
@@ -161,7 +152,6 @@ public class Puzzle implements MouseListener {
             currentWord += BOARD[row][col-1].getLetter();
             if(currentWord.length() >= 3){
                 allWords.add(currentWord);
-                System.out.println(currentWord);
             }
             col--;
         }
@@ -175,7 +165,6 @@ public class Puzzle implements MouseListener {
             currentWord += BOARD[row+1][col+1].getLetter();
             if(currentWord.length() >= 3){
                 allWords.add(currentWord);
-                System.out.println(currentWord);
             }
             col++;
             row++;
@@ -190,7 +179,6 @@ public class Puzzle implements MouseListener {
             currentWord += BOARD[row-1][col-1].getLetter();
             if(currentWord.length() >= 3){
                 allWords.add(currentWord);
-                System.out.println(currentWord);
             }
             col--;
             row--;
@@ -201,11 +189,10 @@ public class Puzzle implements MouseListener {
         row = c.getRow();
 
         // Looks at diagonal : right and up
-        while(col+1 < 5 && row-1 > -1 && isValidCell(BOARD[row+1][col-1])){
-            currentWord += BOARD[row+1][col-1].getLetter();
+        while(row-1 > -1 && col+1 < 5 && isValidCell(BOARD[row-1][col+1])){
+            currentWord += BOARD[row-1][col+1].getLetter();
             if(currentWord.length() >= 3){
                 allWords.add(currentWord);
-                System.out.println(currentWord);
             }
             col++;
             row--;
@@ -215,13 +202,21 @@ public class Puzzle implements MouseListener {
         col = c.getCol();
         row = c.getRow();
 
-
-        // Resets variables for next word
-
+        // Looks at diagonal : left and down
+        while(col-1 > -1 && row+1 > 5 && isValidCell(BOARD[row+1][col-1])){
+            currentWord += BOARD[row+1][col-1].getLetter();
+            if(currentWord.length() >= 3){
+                allWords.add(currentWord);
+            }
+            col--;
+            row++;
+        }
+        currentWord = "";
     }
 
 
-
+    // Some code taken from Spelling Bee
+    // CheckWords iterates through allWords and found words to remove words that aren't in the dictionary
     public void checkWords(){
         // Goes through every word in foundWords and removes it if it's not a word
         for(int i = 0; i < foundWords.size(); i++){
@@ -231,9 +226,15 @@ public class Puzzle implements MouseListener {
                 i--;
             }
         }
+        for(int i = 0; i < allWords.size(); i++){
+            // The toLowerCase() method was found on w3schools.com
+            if(!isWord(allWords.get(i).toLowerCase(), 0, DICTIONARY_SIZE - 1)){
+                allWords.remove(i);
+                i--;
+            }
+        }
     }
 
-    // Some code taken from Spelling Bee
     // Uses Binary search to recursively find if the word is in the dictionary
     public boolean isWord(String word, int low, int high){
         // If low > high we have searched the whole dictionary and the word isn;t there
@@ -337,7 +338,6 @@ public class Puzzle implements MouseListener {
             foundWords.add(currentWord);
             currentWord = "";
             window.repaint();
-            System.out.println(foundWords);
         }
         // If the "I'm done" button is clicked, change the state
         boolean xPos2 = PuzzleViewer.WINDOW_WIDTH - PuzzleViewer.BUTTON_X - PuzzleViewer.BUTTON_WIDTH < x &&
@@ -346,6 +346,9 @@ public class Puzzle implements MouseListener {
             state = 2;
             // Check words is called so that the correct number of words is printed out on the front end
             checkWords();
+            System.out.println("the user's words: \n" + foundWords + "\n");
+            System.out.println("all words: \n" + allWords);
+
             window.repaint();
         }
     }
