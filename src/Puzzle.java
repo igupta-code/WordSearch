@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Puzzle implements MouseListener {
-    public static final int DICTIONARY_SIZE = 143091;
+    public static final int DICTIONARY_SIZE = 4868;
     public static final String[] DICTIONARY = new String[DICTIONARY_SIZE];
     public static final int ROW = 5,
             COL = 5;
@@ -71,8 +71,11 @@ public class Puzzle implements MouseListener {
         }
         int i = 0;
         while(s.hasNextLine()) {
-            DICTIONARY[i++] = s.nextLine();
+            if(s.nextLine().length() >= 3) {
+                DICTIONARY[i++] = s.nextLine();
+            }
         }
+        System.out.println("dictionary size = " + i);
     }
 
     // Load puzzle is a modified version of loadDictionary
@@ -89,6 +92,7 @@ public class Puzzle implements MouseListener {
             puzzle += s.nextLine();
         }
     }
+
     // Find Soltutions find all possible combinations of letters in the board
     // Go through every Cell in the board and use that letter as the starting point for the word
     public void findSoltutions(){
@@ -100,6 +104,7 @@ public class Puzzle implements MouseListener {
         }
         last = null;
     }
+
     // Seek finds all words greater than length three surrounding the letter
     public void seek(Cell c){
         currentWord += c.getLetter();
