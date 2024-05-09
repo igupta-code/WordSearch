@@ -4,6 +4,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -31,13 +32,13 @@ public class Puzzle implements MouseListener {
         direction = -1;
         last = null;
         currentWord = "";
-        state = 1;
+        state = 0;
         foundWords = new ArrayList<String>();
         allWords = new ArrayList<String>();
 
         // Loads puzzle into a puzzle String
-        loadPuzzle();
-        // Takes the puzzle String and maps it to the board
+        // loadPuzzle();
+        /*// Takes the puzzle String and maps it to the board
         for(int i = 0; i < ROW; i++){
             for(int j = 0; j < COL; j++){
                 Cell c = new Cell(puzzle.charAt(i*ROW + j), i, j);
@@ -47,7 +48,7 @@ public class Puzzle implements MouseListener {
 
             }
         }
-        findSoltutions();
+        findSoltutions();*/
 
 
         window = new PuzzleViewer(this);
@@ -85,9 +86,8 @@ public class Puzzle implements MouseListener {
 
     // Load puzzle is a modified version of loadDictionary, which was taken from SpellingBee
     // Loads puzzle from text file into the array
-    public void loadPuzzle() {
+    public void loadPuzzle(File puzzleFile) {
         Scanner s;
-        File puzzleFile = new File("Resources/puzzle2.txt");
         try {
             s = new Scanner(puzzleFile);
         } catch (FileNotFoundException e) {
@@ -97,11 +97,24 @@ public class Puzzle implements MouseListener {
         while(s.hasNextLine()) {
             puzzle += s.nextLine();
         }
+
+        // Takes the puzzle String and maps it to the board
+        for(int i = 0; i < ROW; i++){
+            for(int j = 0; j < COL; j++){
+                Cell c = new Cell(puzzle.charAt(i*ROW + j), i, j);
+                BOARD[i][j] = c;
+                c.setRow(i);
+                c.setCol(j);
+
+            }
+        }
+        // After puzzle is set, find Solutions is called
+        findSolutions();
     }
 
-    // Find Soltutions find all possible combinations of letters in the board
+    // Find Solutions find all possible combinations of letters in the board
     // Go through every Cell in the board and use that letter as the starting point for the word
-    public void findSoltutions(){
+    public void findSolutions(){
         // Seek in every direction for each letter
         for(int i = 0; i < ROW; i++){
             for(int j = 0; j < COL; j++){
@@ -255,6 +268,7 @@ public class Puzzle implements MouseListener {
 
         int mid = (high + low) / 2;
         int compare = word.compareTo(DICTIONARY[mid]);
+
         // If it's found return true
         if(compare == 0){
             return true;
@@ -331,34 +345,50 @@ public class Puzzle implements MouseListener {
 
         // Check if each Cell has been clicked if it has:
         // add the Cell's letter to the currentWord and repaint to show the word
-        for(Cell[] row: BOARD){
-            for(Cell c: row){
-                if (c.isClicked(x, y) && this.isValidCell(c)) {
-                    last = c;
-                    currentWord += c.getLetter();
-                    window.repaint();
-                    return;
+        if(state == 1) {
+            for (Cell[] row : BOARD) {
+                for (Cell c : row) {
+                    if (c.isClicked(x, y) && this.isValidCell(c)) {
+                        last = c;
+                        currentWord += c.getLetter();
+                        window.repaint();
+                        return;
+                    }
                 }
             }
         }
 
-        // If the enter Button is clicked, enter the current word into the foundWords arrayList
+        // If the left Button is clicked, enter the current word into the foundWords arrayList
         boolean xPos = PuzzleViewer.BUTTON_X < x && PuzzleViewer.BUTTON_X + PuzzleViewer.BUTTON_WIDTH > x;
         boolean yPos = PuzzleViewer.BUTTON_Y < y && PuzzleViewer.BUTTON_Y + PuzzleViewer.BUTTON_HEIGHT > y;
         if(xPos && yPos){
-            foundWords.add(currentWord);
-            currentWord = "";
-            window.repaint();
+            if(state == 0){
+                loadPuzzle(new File("Resources/puzzle2.txt"));
+                state = 1;
+            }
+            else if (state == 1) {
+                foundWords.add(currentWord);
+                currentWord = "";
+                window.repaint();
+            }
         }
-        // If the "I'm done" button is clicked, change the state
+
+        // If the right button is clicked, change the state
         boolean xPos2 = PuzzleViewer.WINDOW_WIDTH - PuzzleViewer.BUTTON_X - PuzzleViewer.BUTTON_WIDTH < x &&
                 PuzzleViewer.WINDOW_WIDTH - PuzzleViewer.BUTTON_X > x;
         if(xPos2 && yPos){
-            state = 2;
-            // Check words is called so that the correct number of words is printed out on the front end
-            checkWords();
-            System.out.println("the user's words: \n" + foundWords + "\n");
-            System.out.println("all words: \n" + allWords);
+            // If you're on state zero, load in the board and start the game
+            if(state == 0){
+                loadPuzzle(new File("Resources/puzzle1.txt"));
+                state = 1;
+            }
+            else if (state == 1) {
+                state = 2;
+                // Check words is called so that the correct number of words is printed out on the front end
+                checkWords();
+                System.out.println("the user's words: \n" + foundWords + "\n");
+                System.out.println("all words: \n" + allWords);
+            }
 
             window.repaint();
         }
