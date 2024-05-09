@@ -21,19 +21,23 @@ public class Puzzle implements MouseListener {
     private Cell last;
     // North = 0, East = 1, South = 2, West = 3
     // Northeast = 4, Southeast = 5, Southwest = 6, Northwest = 7
-    private int direction = -1;
+    private int direction;
 
 
 
     private PuzzleViewer window;
 
     public Puzzle(){
+        direction = -1;
         last = null;
         currentWord = "";
         state = 1;
         foundWords = new ArrayList<String>();
         allWords = new ArrayList<String>();
+
+        // Loads puzzle into a puzzle String
         loadPuzzle();
+        // Takes the puzzle String and maps it to the board
         for(int i = 0; i < ROW; i++){
             for(int j = 0; j < COL; j++){
                 Cell c = new Cell(puzzle.charAt(i*ROW + j), i, j);
@@ -44,8 +48,9 @@ public class Puzzle implements MouseListener {
             }
         }
         findSoltutions();
-        window = new PuzzleViewer(this);
 
+
+        window = new PuzzleViewer(this);
         this.window.addMouseListener(this);
     }
 
@@ -78,10 +83,11 @@ public class Puzzle implements MouseListener {
         System.out.println("dictionary size = " + i);
     }
 
-    // Load puzzle is a modified version of loadDictionary
+    // Load puzzle is a modified version of loadDictionary, which was taken from SpellingBee
+    // Loads puzzle from text file into the array
     public void loadPuzzle() {
         Scanner s;
-        File puzzleFile = new File("Resources/puzzle1.txt");
+        File puzzleFile = new File("Resources/puzzle2.txt");
         try {
             s = new Scanner(puzzleFile);
         } catch (FileNotFoundException e) {
