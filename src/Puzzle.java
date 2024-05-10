@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Puzzle implements MouseListener {
-    public static final int DICTIONARY_SIZE = 4868;
+    public static final int DICTIONARY_SIZE = 9576;
     public static final String[] DICTIONARY = new String[DICTIONARY_SIZE];
     public static final int ROW = 5,
             COL = 5;
@@ -20,6 +20,7 @@ public class Puzzle implements MouseListener {
     private String currentWord;
     private int state;
     private Cell last;
+
     // North = 0, East = 1, South = 2, West = 3
     // Northeast = 4, Southeast = 5, Southwest = 6, Northwest = 7
     private int direction;
@@ -33,24 +34,12 @@ public class Puzzle implements MouseListener {
         last = null;
         currentWord = "";
         state = 0;
+
+        // ArrayLists to store words found by user/computer
         foundWords = new ArrayList<String>();
         allWords = new ArrayList<String>();
 
-        // Loads puzzle into a puzzle String
-        // loadPuzzle();
-        /*// Takes the puzzle String and maps it to the board
-        for(int i = 0; i < ROW; i++){
-            for(int j = 0; j < COL; j++){
-                Cell c = new Cell(puzzle.charAt(i*ROW + j), i, j);
-                BOARD[i][j] = c;
-                c.setRow(i);
-                c.setCol(j);
-
-            }
-        }
-        findSoltutions();*/
-
-
+        // Initializes Window
         window = new PuzzleViewer(this);
         this.window.addMouseListener(this);
     }
@@ -77,11 +66,12 @@ public class Puzzle implements MouseListener {
         }
         int i = 0;
         while(s.hasNextLine()) {
-            if(s.nextLine().length() >= 3) {
-                DICTIONARY[i++] = s.nextLine();
+            // Only adds word to DICTIONARY if it's 3 letter or greater
+            String line = s.nextLine();
+            if(line.length() >= 3) {
+                DICTIONARY[i++] = line;
             }
         }
-        System.out.println("dictionary size = " + i);
     }
 
     // Load puzzle is a modified version of loadDictionary, which was taken from SpellingBee
@@ -108,7 +98,7 @@ public class Puzzle implements MouseListener {
 
             }
         }
-        // After puzzle is set, find Solutions is called
+        // After puzzle is set, find Solutions is called to find all valid words in puzzle
         findSolutions();
     }
 
@@ -158,7 +148,6 @@ public class Puzzle implements MouseListener {
         currentWord += c.getLetter();
         row = c.getRow();
 
-
         // Looks right
         while(col+1 < 5 && isValidCell(BOARD[row][col+1])){
             currentWord += BOARD[row][col+1].getLetter();
@@ -182,7 +171,6 @@ public class Puzzle implements MouseListener {
         currentWord = "";
         currentWord += c.getLetter();
         col = c.getCol();
-
 
         // Looks at diagonal : right and down
         while(col+1 < 5 && row+1 < 5 && isValidCell(BOARD[row+1][col+1])){
@@ -235,6 +223,7 @@ public class Puzzle implements MouseListener {
             col--;
             row++;
         }
+        // Have to re-set current Word to prevent errors when user looks for a word later on
         currentWord = "";
     }
 
@@ -250,6 +239,7 @@ public class Puzzle implements MouseListener {
                 i--;
             }
         }
+        // Goes through words in AllWords (computer's found words) to remove non-valid words
         for(int i = 0; i < allWords.size(); i++){
             // The toLowerCase() method was found on w3schools.com
             if(!isWord(allWords.get(i).toLowerCase(), 0, DICTIONARY_SIZE - 1)){
@@ -282,19 +272,25 @@ public class Puzzle implements MouseListener {
             return isWord(word, low, mid-1);
         }
     }
+
+    // Checks if the Cell is ok to click on -- Cell must exist and be in the right direction
     public boolean isValidCell(Cell c){
+        // If the cell doesn't exist return false
         if(c == null){
             return false;
         }
+        // If this is the first cell you are clicking on in a word, you can pick any valid cell
         if(last == null || currentWord.isEmpty()){
             return true;
         }
 
+        // Last cell pos - this cell pos tells you what direction you are going
         int row = last.getRow() - c.getRow();
         int col = last.getCol() - c.getCol();
-        // If the row is not between -1 and 1 then you are skipping rows
-        if(row > 1 || row < -1 || col > 1 || col < -1 || (col == 0 && row == 0)) return false;
 
+        // If the row is not between -1 and 1 then you are skipping rows -- not valid
+        if(row > 1 || row < -1 || col > 1 || col < -1 || (col == 0 && row == 0)) return false;
+        // The second cell you chose determines what direction the word goes in
         if(currentWord.length() == 1){
             // North = 0, East = 1, South = 2, West = 3
             // Northeast = 4, Southeast = 5, Southwest = 6, Northwest = 7
@@ -311,9 +307,8 @@ public class Puzzle implements MouseListener {
             else if(col == -1) direction = 1;
             else direction = 3;
         }
+        // After the second cell you must go in the same direction as you started in
         else{
-            // North = 0, East = 1, South = 2, West = 3
-            // Northeast = 4, Southeast = 5, Southwest = 6, Northwest = 7
             if(direction == 0 || direction == 7 || direction == 4)
                 if (row != 1) return false;
             if(direction == 6 || direction == 2 || direction == 5)
@@ -343,7 +338,7 @@ public class Puzzle implements MouseListener {
         int x = e.getX();
         int y = e.getY();
 
-        // Check if each Cell has been clicked if it has:
+        // If you are playing the game (state 1) - check if each Cell has been clicked if it has:
         // add the Cell's letter to the currentWord and repaint to show the word
         if(state == 1) {
             for (Cell[] row : BOARD) {
@@ -358,14 +353,16 @@ public class Puzzle implements MouseListener {
             }
         }
 
-        // If the left Button is clicked, enter the current word into the foundWords arrayList
+        // If the left Button is clicked
         boolean xPos = PuzzleViewer.BUTTON_X < x && PuzzleViewer.BUTTON_X + PuzzleViewer.BUTTON_WIDTH > x;
         boolean yPos = PuzzleViewer.BUTTON_Y < y && PuzzleViewer.BUTTON_Y + PuzzleViewer.BUTTON_HEIGHT > y;
         if(xPos && yPos){
+            // If you're in starting page, display / use puzzle 2 + change the state
             if(state == 0){
                 loadPuzzle(new File("Resources/puzzle2.txt"));
                 state = 1;
             }
+            // If you're playing the game, enter the current word into the foundWords arrayList
             else if (state == 1) {
                 foundWords.add(currentWord);
                 currentWord = "";
@@ -373,15 +370,16 @@ public class Puzzle implements MouseListener {
             }
         }
 
-        // If the right button is clicked, change the state
+        // If the right button is clicked
         boolean xPos2 = PuzzleViewer.WINDOW_WIDTH - PuzzleViewer.BUTTON_X - PuzzleViewer.BUTTON_WIDTH < x &&
                 PuzzleViewer.WINDOW_WIDTH - PuzzleViewer.BUTTON_X > x;
         if(xPos2 && yPos){
-            // If you're on state zero, load in the board and start the game
+            // If you're on state zero, load in the board and start the game (change the state)
             if(state == 0){
                 loadPuzzle(new File("Resources/puzzle1.txt"));
                 state = 1;
             }
+            // If you're playing the game, finish the game
             else if (state == 1) {
                 state = 2;
                 // Check words is called so that the correct number of words is printed out on the front end
@@ -389,7 +387,6 @@ public class Puzzle implements MouseListener {
                 System.out.println("the user's words: \n" + foundWords + "\n");
                 System.out.println("all words: \n" + allWords);
             }
-
             window.repaint();
         }
     }
@@ -399,8 +396,6 @@ public class Puzzle implements MouseListener {
     public void mouseEntered(MouseEvent e) {}
     @Override
     public void mouseExited(MouseEvent e) {}
-
-
 
     public static void main(String[] args){
         Puzzle p = new Puzzle();

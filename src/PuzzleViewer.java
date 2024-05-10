@@ -22,9 +22,9 @@ public class PuzzleViewer extends JFrame {
     public PuzzleViewer(Puzzle game) {
         // Allows variables / methods to be shared
         this.game = game;
-        this.start = (new ImageIcon("Resources/openingPic.png")).getImage();
 
-        // Initialize images
+        // Initializes the image
+        this.start = (new ImageIcon("Resources/openingPic.png")).getImage();
 
         // Creates a new window
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -35,6 +35,7 @@ public class PuzzleViewer extends JFrame {
 
 
     public void paint(Graphics g) {
+        // Intro Screen
         if (game.getState() == 0){
             g.drawImage(start, 0, 0, 1000, 800, this);
 
@@ -53,6 +54,7 @@ public class PuzzleViewer extends JFrame {
             g.drawString("Sports Puzzle", xPos +5, BUTTON_Y + BUTTON_HEIGHT - 14);
         }
 
+        // Starts the Puzzle
         if (game.getState() == 1) {
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -87,7 +89,9 @@ public class PuzzleViewer extends JFrame {
             g.drawString("I'm done!", xPos + 32, BUTTON_Y + BUTTON_HEIGHT - 14);
         }
 
+        // Final screen
         if (game.getState() == 2) {
+            // Prints out how many words you found out of the total number of words
             g.setColor(new Color(200, 205, 232));
             g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
             g.setFont(new Font("Felix Banjamin", Font.PLAIN, (int) (BUTTON_HEIGHT * 0.7)));

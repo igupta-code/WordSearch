@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c96fc70-a8d6-4092-92f0-01be03ad6d12" name="Changes" comment="added an image">
+    <list default="true" id="1c96fc70-a8d6-4092-92f0-01be03ad6d12" name="Changes" comment="Final minus comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/Screenshot 2024-05-09 at 9.08.26 AM.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Puzzle.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,6 +60,22 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Resources" />
     </key>
+  </component>
+  <component name="RunManager" selected="Application.Puzzle">
+    <configuration name="Puzzle" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Puzzle" />
+      <module name="WordSearch" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Puzzle1" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Puzzle" />
+      <module name="WordSearch" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -183,7 +198,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715271630334</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Final minus comments">
+      <option name="closed" value="true" />
+      <created>1715274616883</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1715274616883</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -198,19 +221,16 @@
     <MESSAGE value="Finished seek / formatted final page a bit" />
     <MESSAGE value="Draft 1" />
     <MESSAGE value="added an image" />
-    <option name="LAST_COMMIT_MESSAGE" value="added an image" />
+    <MESSAGE value="Final minus comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final minus comments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Puzzle.java</url>
-          <line>262</line>
-          <properties class="Puzzle" method="isWord">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="28" />
+          <line>269</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
